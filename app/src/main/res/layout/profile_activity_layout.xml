@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <com.google.android.material.tabs.TabLayout android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                app:tabBackground="@color/colorAccent"
+                                                app:tabGravity="fill"
+                                                app:tabIndicatorColor="@color/whiteText"
+                                                app:tabIndicatorHeight="4dp"
+                                                app:tabMode="fixed"
+                                                app:tabTextColor="@color/blackText"
+                                                app:tabSelectedTextColor="@color/whiteText"
+                                                android:id="@+id/tabsActivityTL"/>
+
+    <androidx.viewpager.widget.ViewPager android:layout_width="match_parent"
+                                         android:id="@+id/tabsActivityVP"
+                                         android:layout_height="match_parent"/>
+
+</LinearLayout>

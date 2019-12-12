@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <ImageView android:layout_width="35dp"
+        android:id="@+id/leaderImage"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
+        tools:src="@mipmap/ic_first_avatar"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/ic_launcher"/>
+
+
+    <TextView android:layout_width="wrap_content"
+        android:id="@+id/leaderName"
+        android:layout_toRightOf="@id/leaderImage"
+        android:layout_toLeftOf="@id/leaderScore"
+        android:layout_marginLeft="15dp"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textSize="18sp"
+        android:textColor="@color/blackText"
+        android:ellipsize="marquee"
+        tools:text="Nickname"/>
+
+    <TextView
+        android:id="@+id/leaderScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+
+        />
+
+</RelativeLayout>
