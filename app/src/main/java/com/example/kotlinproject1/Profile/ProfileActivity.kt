@@ -6,7 +6,7 @@ import com.example.kotlinproject1.R
 import kotlinx.android.synthetic.main.profile_activity_layout.*
 
 class ProfileActivity: AppCompatActivity() {
-    private val tabTitles = arrayListOf("Profile", "Change Password")
+    private val tabTitles = arrayListOf("Profile", "Change Password","Change Avatar")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,7 +15,7 @@ class ProfileActivity: AppCompatActivity() {
         val tabsAdapter=ProfileAdapter(supportFragmentManager,tabTitles)
         with(tabsActivityVP){
             adapter=tabsAdapter
-            offscreenPageLimit=2
+            offscreenPageLimit=3
             tabsActivityTL.setupWithViewPager(this)
         }
     }
