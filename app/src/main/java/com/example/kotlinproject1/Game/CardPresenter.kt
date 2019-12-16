@@ -1,6 +1,8 @@
 package com.example.kotlinproject1.Game
 import android.graphics.Color
+import android.os.CountDownTimer
 import android.os.Handler
+import android.widget.Toast
 import com.example.kotlinproject1.R
 import com.example.kotlinproject1.Game.CardInterface.*
 import java.util.*
@@ -72,11 +74,16 @@ class CardPresenter (view: View, level: Int =8) : Presenter {
                             if (items[visibles[0]].getImage() == items[visibles[1]].getImage()) {
                                 items[visibles[0]].isMatched = true
                                 items[visibles[1]].isMatched = true
-                                point+=20
-                                mView.updateSteps(point)
+                                point+=10
+                                mView.updateScore(point)
                             } else {
                                 items[visibles[0]].isVisible = false
                                 items[visibles[1]].isVisible = false
+                                point-=1
+                                if(point<0){
+                                    point=0
+                                }
+                                mView.updateScore(point)
                             }
                             mView.refreshData(visibles[0])
                             mView.refreshData(visibles[1])
@@ -84,7 +91,7 @@ class CardPresenter (view: View, level: Int =8) : Presenter {
                             isCLickable = true
                             checkGameEnd()
                         }, 250L)
-
+                        //mView.endTimer()
                     }
 
                 }
@@ -93,8 +100,14 @@ class CardPresenter (view: View, level: Int =8) : Presenter {
         return deckAdapter
     }
 
+
+
     fun checkGameEnd() {
+
         var i = 0
+
+
+
         for(k in 0 until items.size) {
             if(items[k].isMatched) i++
         }

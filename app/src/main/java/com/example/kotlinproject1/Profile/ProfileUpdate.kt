@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.second_fragment_layout.*
 import kotlinx.android.synthetic.main.second_fragment_layout.nPw1
 import kotlinx.android.synthetic.main.second_fragment_layout.nPw2
 import kotlinx.android.synthetic.main.second_fragment_layout.profile_image1
-import kotlinx.android.synthetic.main.second_fragment_layout.uPw1
+import kotlinx.android.synthetic.main.second_fragment_layout.uPw0
 
 
 class ProfileUpdate : Fragment() {
@@ -35,11 +35,11 @@ class ProfileUpdate : Fragment() {
     }
 
     private fun changePassword() {
-        if(uPw1.text.isNotEmpty() && nPw1.text.isNotEmpty() && nPw2.text.isNotEmpty()){
+        if(uPw0.text.isNotEmpty() && nPw1.text.isNotEmpty() && nPw2.text.isNotEmpty()){
             if(nPw1.text.toString().equals(nPw2.text.toString())){
                 val user = auth.currentUser
                 if(user!=null && user.email!=null){
-                    val credential = EmailAuthProvider.getCredential(user.email!!, uPw1.text.toString())
+                    val credential = EmailAuthProvider.getCredential(user.email!!, uPw0.text.toString())
                     user.reauthenticate(credential).addOnCompleteListener{
                         if(it.isSuccessful){
                             Toast.makeText(activity, "Re-Authentication success.", Toast.LENGTH_SHORT).show()
@@ -53,6 +53,8 @@ class ProfileUpdate : Fragment() {
                                         Toast.makeText(activity,"Re-Auth failed",Toast.LENGTH_SHORT).show()
                                     }
                                 }
+                        }else{
+                            Toast.makeText(activity,"Your Password is incorrect",Toast.LENGTH_SHORT).show()
                         }
                     }
                 }else{startActivity(Intent(activity, LoginActivity::class.java))}

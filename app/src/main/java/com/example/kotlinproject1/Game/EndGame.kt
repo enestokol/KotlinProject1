@@ -33,14 +33,12 @@ class EndGame : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 for (singleSnapshot in p0.children) {
                     var user = singleSnapshot.getValue(User::class.java)
-
                     val pref=Prefences(context)
 
-                    if ( (-1*user?.score!!) <pref.getLastScore()){
+                    FirebaseAuth.getInstance().currentUser?.uid?.let {
+                        reference.child("User").child(it).child("score")
+                            .setValue( user?.score!!-pref.getLastScore() )
 
-                        FirebaseAuth.getInstance().currentUser?.uid?.let {
-                            reference.child("User").child(it).child("score").setValue(-1*pref.getLastScore())
-                        }
                     }
                 }
             }

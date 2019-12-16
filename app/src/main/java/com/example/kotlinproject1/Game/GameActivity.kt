@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -38,32 +39,41 @@ class GameActivity : AppCompatActivity(), View {
         return this
     }
 
-    override fun startGame() {
 
-        binding.deckRecycler.layoutManager = GridLayoutManager(this, 3)
+
+    lateinit var t:CountDownTimer
+
+    override fun startGame() {
+        binding.deckRecycler.layoutManager = GridLayoutManager(this, 4)
         binding.deckRecycler.adapter = presenter.getAdapter()
 
-        object : CountDownTimer(25000, 1000) {
+        t=object : CountDownTimer(25000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                binding.secs.text="seconds: " + millisUntilFinished / 1000
+                binding.secs.text=(millisUntilFinished / 1000).toString()
             }
 
             override fun onFinish() {
-                binding.secs.text="Time is up"
+                binding.secs.text="0"
+                endTimer()
             }
         }.start()
     }
 
 
+    override fun endTimer() {
+        if(binding.secs.text=="0") {
+            showEnding()
+        }
+    }
 
-
-    override fun showEnding() {
+        override fun showEnding() {
 
         binding.deckRecycler.visibility           = android.view.View.GONE
         binding.scoreText.visibility      = android.view.View.GONE
         binding.secs.visibility = android.view.View.GONE
 
+        t.cancel()
         val intent = Intent(this,EndGame::class.java)
         intent.putExtra("Score",scoreText.text)
         startActivity(intent)
@@ -78,12 +88,11 @@ class GameActivity : AppCompatActivity(), View {
 
 
 
-    override fun updateSteps(value: Int) {
-        if(binding.secs.text!="Time is up") {
+    override fun updateScore(value: Int) {
+        if(binding.secs.text!="0") {
             binding.scoreText.text = value.toString()
         }
     }
-
 
 
     override fun onSupportNavigateUp(): Boolean {
