@@ -62,20 +62,20 @@ class EndGame : AppCompatActivity() {
 
 
 
-        if(pref!=null){
+        if(pref.getLastScore()!=null){
             if(score!!.toInt()>=pref.getLastScore()){
-                lhigh=score!!.toInt()
+                lhigh=score.toInt()
             }
             else{
                 lhigh=pref.getLastScore()
             }
         }
         else{
-            lhigh=score.toInt()
+            lhigh=score!!.toInt()
         }
 
 
-        pref.setLastScore(score!!.toInt())
+        pref.setLastScore(score.toInt())
 
 
 

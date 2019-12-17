@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -48,7 +49,12 @@ class MainActivity : AppCompatActivity() {
          override fun onDataChange(p0: DataSnapshot) {
             for (singleSnapshot in p0.children) {
                 var user = singleSnapshot.getValue(User::class.java)
-                user_image.setImageResource(getResourceId(user?.image))
+                if(user?.imageup!=null){
+                    Picasso.with(this@MainActivity).load(user?.imageup).into(user_image)
+                }
+                else{
+                    user_image.setImageResource(getResourceId(user?.image))
+                }
                 user_name.text="Welcome "+user?.username
                 scores.text="Score: ${latescore}\nHigh Score: ${user?.highscore} "
             }
@@ -72,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
         val pref=Prefences(this)
         latescore=pref.getLastScore()
-        val intent2=intent
+//        val intent2=intent
 //        var score=intent2.getStringExtra("lastscore")
 //
 //        if(score==null){

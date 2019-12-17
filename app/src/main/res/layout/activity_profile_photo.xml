@@ -49,6 +49,7 @@
         <Button
             android:id="@+id/returnhomepage"
             android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:text="Return Homepage" />

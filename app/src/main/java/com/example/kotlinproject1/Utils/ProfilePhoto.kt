@@ -16,7 +16,9 @@ import androidx.core.content.ContextCompat
 import com.example.kotlinproject1.Authentication.User
 import com.example.kotlinproject1.MainActivity
 import com.example.kotlinproject1.R
+import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -113,7 +115,13 @@ class ProfilePhoto : AppCompatActivity(),PhotoFragment.onProfilePhotoListener {
             override fun onDataChange(p0: DataSnapshot) {
                 for (singleSnapshot in p0.children) {
                     var user = singleSnapshot.getValue(User::class.java)
-                    updateimg1.setImageResource(getResourceId(user?.image))
+                    if(user?.imageup!=null){
+                        Picasso.with(this@ProfilePhoto).load(user?.imageup).into(updateimg1)
+                    }
+                    else{
+                        updateimg1.setImageResource(getResourceId(user?.image))
+                    }
+                    //updateimg1.setImageResource(getResourceId(user?.image))
                 }
 
             }
@@ -150,7 +158,7 @@ class ProfilePhoto : AppCompatActivity(),PhotoFragment.onProfilePhotoListener {
 
             var imageBytes: ByteArray? = null
 
-            for(i in 1..10){
+            for(i in 1..5){
                 imageBytes=convertBitmaptoByte(myBitmap,100/i)
                 publishProgress()
 
@@ -188,25 +196,55 @@ class ProfilePhoto : AppCompatActivity(),PhotoFragment.onProfilePhotoListener {
 
         var uploadTo=imageUploadedPath.putBytes(result!!)
 
-        uploadTo.addOnSuccessListener (object :OnSuccessListener<UploadTask.TaskSnapshot>{
 
 
-            override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
 
-                var firebaseURL =p0?.uploadSessionUri
 
-                Toast.makeText(this@ProfilePhoto,"Path"+p0.toString(), Toast.LENGTH_SHORT).show()
+
+        uploadTo.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            imageUploadedPath.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                Toast.makeText(this@ProfilePhoto,"Path"+downloadUri.toString(), Toast.LENGTH_SHORT).show()
 
                 FirebaseDatabase.getInstance().reference
                     .child("User")
                     .child(FirebaseAuth.getInstance().currentUser?.uid!!)
                     .child("imageup")
-                    .setValue(firebaseURL.toString())
+                    .setValue(downloadUri.toString())
                 progressinvisible()
-
+            } else {
+                // Handle failures
+                // ...
             }
-        })
+        }
 
+//        uploadTo.addOnSuccessListener (object :OnSuccessListener<UploadTask.TaskSnapshot>{
+//
+//
+//            override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
+//
+//
+//                var firebaseURL=uploadTo.getResult().uploadSessionUri
+//
+//                Toast.makeText(this@ProfilePhoto,"Path"+p0.toString(), Toast.LENGTH_SHORT).show()
+//
+//                FirebaseDatabase.getInstance().reference
+//                    .child("User")
+//                    .child(FirebaseAuth.getInstance().currentUser?.uid!!)
+//                    .child("imageup")
+//                    .setValue(firebaseURL.toString())
+//                progressinvisible()
+//
+//            }
+//        })
+//
     }
 
     private fun ImageCompressed(gallerySource:Uri){
