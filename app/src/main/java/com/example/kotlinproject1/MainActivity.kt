@@ -9,6 +9,7 @@ import com.example.kotlinproject1.Board.LeaderBoard
 import com.example.kotlinproject1.Game.GameActivity
 import com.example.kotlinproject1.Profile.ProfileActivity
 import com.example.kotlinproject1.Utils.Prefences
+import com.example.kotlinproject1.Utils.ProfilePhoto
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private var auth: FirebaseAuth=FirebaseAuth.getInstance()
     private var latescore=0
+   // private var lasthighscore=0
 
     private fun getResourceId(id: Int?) = when (id) {
         0 -> R.mipmap.ic_first_avatar
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 var user = singleSnapshot.getValue(User::class.java)
                 user_image.setImageResource(getResourceId(user?.image))
                 user_name.text="Welcome "+user?.username
-                scores.text="Score: ${latescore}\nHigh Score: ${-1*user?.score!!} "
+                scores.text="Score: ${latescore}\nHigh Score: ${user?.highscore} "
             }
          }
         })
@@ -70,6 +72,14 @@ class MainActivity : AppCompatActivity() {
 
         val pref=Prefences(this)
         latescore=pref.getLastScore()
+        val intent2=intent
+//        var score=intent2.getStringExtra("lastscore")
+//
+//        if(score==null){
+//            score=latescore.toString()
+//        }
+//        lasthighscore=score.toInt()
+
 
         readFBUser()
 
@@ -88,6 +98,12 @@ class MainActivity : AppCompatActivity() {
         profile.setOnClickListener {
             val intent=Intent(this@MainActivity,ProfileActivity::class.java)
             startActivity(intent)
+        }
+
+        profilephoto.setOnClickListener {
+            val intent=Intent(this@MainActivity,ProfilePhoto::class.java)
+            startActivity(intent)
+            finish()
         }
 
         signOutbtn.setOnClickListener {

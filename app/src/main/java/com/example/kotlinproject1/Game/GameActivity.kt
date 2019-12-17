@@ -29,8 +29,7 @@ class GameActivity : AppCompatActivity(), View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_game)
 
-        var level:Int=8
-        presenter = CardPresenter(this,level)
+        presenter = CardPresenter(this,8)
         readFBData()
         presenter.beginGame()
     }

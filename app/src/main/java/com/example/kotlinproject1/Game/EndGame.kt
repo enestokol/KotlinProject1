@@ -17,6 +17,8 @@ import kotlinx.android.synthetic.main.activity_end_game.*
 
 class EndGame : AppCompatActivity() {
 
+    var lhigh=0
+
     private fun readFBUser(context: Context) {
         var reference = FirebaseDatabase.getInstance().reference
         var fbuser = FirebaseAuth.getInstance().currentUser
@@ -38,7 +40,11 @@ class EndGame : AppCompatActivity() {
                     FirebaseAuth.getInstance().currentUser?.uid?.let {
                         reference.child("User").child(it).child("score")
                             .setValue( user?.score!!-pref.getLastScore() )
+                    }
 
+                    FirebaseAuth.getInstance().currentUser?.uid?.let {
+                        reference.child("User").child(it).child("highscore")
+                            .setValue( lhigh)
                     }
                 }
             }
@@ -52,7 +58,26 @@ class EndGame : AppCompatActivity() {
         val intent=intent
         val score=intent.getStringExtra("Score")
         val pref=Prefences(this)
+
+
+
+
+        if(pref!=null){
+            if(score!!.toInt()>=pref.getLastScore()){
+                lhigh=score!!.toInt()
+            }
+            else{
+                lhigh=pref.getLastScore()
+            }
+        }
+        else{
+            lhigh=score.toInt()
+        }
+
+
         pref.setLastScore(score!!.toInt())
+
+
 
         uEndScore.text="Score: "+score.toString()
         readFBUser(context = this)
@@ -65,8 +90,9 @@ class EndGame : AppCompatActivity() {
 
         homepage.setOnClickListener {
             val intent2=Intent(this@EndGame,MainActivity::class.java)
-            intent.putExtra("prefscore",pref.getLastScore())
+            //intent2.putExtra("lastscore",lhigh.toString())
             startActivity(intent2)
+            finish()
         }
 
     }

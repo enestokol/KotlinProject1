@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/LinearLayout1"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
         android:orientation="vertical">
 
@@ -77,10 +77,17 @@
             android:text="Profile" />
 
         <Button
+            android:id="@+id/profilephoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Update Profile Image" />
+
+        <Button
             android:id="@+id/signOutbtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:text="Sign Out" />
 
     </LinearLayout>

@@ -14,7 +14,7 @@ class ProfileAdapter(fragmentManager: FragmentManager, private val titles: Array
         when (position) {
         0->   fragment = ProfileInfo()
         1->   fragment = ProfileUpdate()
-        2->   fragment = ThirdFragment()
+        //2->   fragment = ThirdFragment()
         }
 
        return fragment!!

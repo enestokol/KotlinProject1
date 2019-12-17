@@ -22,7 +22,7 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener(object: OnCompleteListener<AuthResult>{
                 override fun onComplete(p0: Task<AuthResult>) {
                     if(p0.isSuccessful){
-                        val dbUser=User(user_id = auth.currentUser!!.uid,username =auth.currentUser?.email!!.substring(0,auth.currentUser?.email!!.indexOf("@")),image =(1..5).random(),score =0)
+                        val dbUser=User(user_id = auth.currentUser!!.uid,username =auth.currentUser?.email!!.substring(0,auth.currentUser?.email!!.indexOf("@")),image =(1..5).random(),score =0,imageup ="",highscore = 0)
                         FirebaseDatabase.getInstance().reference
                             .child("User")
                             .child(auth.currentUser!!.uid)
