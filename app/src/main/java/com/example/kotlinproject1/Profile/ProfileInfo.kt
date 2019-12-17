@@ -12,6 +12,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.first_fragment_layout.*
 
 class ProfileInfo : Fragment() {
@@ -52,7 +53,13 @@ class ProfileInfo : Fragment() {
             override fun onDataChange(p0: DataSnapshot) {
                 for (singleSnapshot in p0.children) {
                     var user = singleSnapshot.getValue(User::class.java)
-                    profile_image1.setImageResource(getResourceId(user?.image))
+                    if(user?.imageup!=null){
+                        Picasso.with(activity).load(user?.imageup).into(profile_image1)
+                    }
+                    else{
+                        profile_image1.setImageResource(getResourceId(user?.image))
+                    }
+                    //profile_image1.setImageResource(getResourceId(user?.image))
                     uPw.text="ID: "+ user?.user_id
                     profile_user.text="Username: "+ user?.username
                     nPw1.text="Email: "+ auth.currentUser?.email.toString()

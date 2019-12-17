@@ -23,7 +23,9 @@
             android:paddingBottom="10dp"
             android:text="Click Image to change your Avatar" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"
             android:id="@+id/updateimg1"
             android:layout_width="150dp"
             android:layout_height="150dp"

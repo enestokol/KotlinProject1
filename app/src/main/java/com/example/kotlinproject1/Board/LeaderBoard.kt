@@ -11,6 +11,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.leader_row_layout.view.*
 
 class LeaderBoard : AppCompatActivity() {

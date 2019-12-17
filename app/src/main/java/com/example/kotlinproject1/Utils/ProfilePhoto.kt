@@ -211,7 +211,7 @@ class ProfilePhoto : AppCompatActivity(),PhotoFragment.onProfilePhotoListener {
         }.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
-                Toast.makeText(this@ProfilePhoto,"Path"+downloadUri.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ProfilePhoto,"Succeeded", Toast.LENGTH_SHORT).show()
 
                 FirebaseDatabase.getInstance().reference
                     .child("User")

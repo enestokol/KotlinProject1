@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_game.*
 
 
@@ -130,7 +131,13 @@ class GameActivity : AppCompatActivity(), View {
             override fun onDataChange(p0: DataSnapshot) {
                 for (singleSnapshot in p0.children) {
                     var user = singleSnapshot.getValue(User::class.java)
-                    binding.gameUserImage.setImageResource(getResourceId(user?.image))
+                    if(user?.imageup!=null){
+                        Picasso.with(this@GameActivity).load(user?.imageup).into(binding.gameUserImage)
+                    }
+                    else{
+                        binding.gameUserImage.setImageResource(getResourceId(user?.image))
+                    }
+                    //binding.gameUserImage.setImageResource(getResourceId(user?.image))
                 }
             }
 
